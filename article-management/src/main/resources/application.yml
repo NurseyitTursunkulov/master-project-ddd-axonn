@@ -1,0 +1,14 @@
+# server.port = 9090
+# springdoc.swagger-ui.path=/doc
+
+server:
+  port: 9090
+
+springdoc:
+  swagger-ui:
+    path: /doc
+    urls:
+      - name: article
+        url: http://localhost:9091/v3/api-docs
+      - name: user-profile
+        url: http://localhost:9093/v3/api-docs

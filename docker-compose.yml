@@ -1,0 +1,94 @@
+version: "3.7"
+name: masterproject-ddd-stack
+
+services:
+  axonserver:
+    image: axoniq/axonserver:latest-dev
+    hostname: axonserver
+    volumes:
+      - ./data/axon-server-se/data:/axonserver/data
+      - ./data/axon-server-se/events:/axonserver/events
+      - ./data/axon-server-se/config:/axonserver/config:ro
+    ports:
+      - "8024:8024"
+      - "8124:8124"
+    networks:
+      - masterproject-ddd
+
+  # postgresqlUI:
+  #   image: dpage/pgadmin4
+  #   hostname: postgresqlUI
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=user@admin.com
+  #     - PGADMIN_DEFAULT_PASSWORD=admin
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - masterproject-ddd
+
+  # keycloakdb:
+  #   image: bitnami/postgresql:latest
+  #   hostname: keycloakdb
+  #   environment:
+  #     - POSTGRESQL_USERNAME=keycloak
+  #     - POSTGRESQL_PASSWORD=Keycloak_pass12
+  #     - POSTGRESQL_DATABASE=keycloak
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - ./data/keycloakDB:/bitnami/postgresql
+  #   networks:
+  #     - masterproject-ddd
+
+  # keycloak:
+  #   image: bitnami/keycloak:latest
+  #   hostname: keycloak
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - keycloakdb
+  #   environment:
+  #     - KEYCLOAK_ADMIN_USER=admin
+  #     - KEYCLOAK_ADMIN_PASSWORD=admin
+  #     - KEYCLOAK_MANAGEMENT_USER=manager
+  #     - KEYCLOAK_MANAGEMENT_PASSWORD=admin
+  #     - KEYCLOAK_DATABASE_HOST=keycloakdb
+  #     - KEYCLOAK_DATABASE_NAME=keycloak
+  #     - KEYCLOAK_DATABASE_USER=keycloak
+  #     - KEYCLOAK_DATABASE_PASSWORD=Keycloak_pass12
+  #   networks:
+  #     - masterproject-ddd
+
+  # cloudbeaver:
+  #   image: dbeaver/cloudbeaver
+  #   hostname: cloudbeaver
+  #   volumes:
+  #     - ./data/cloudBeaver:/opt/cloudbeaver/workspace
+  #   ports:
+  #     - "8978:8978"
+  #   networks:
+  #     - masterproject-ddd
+
+  # mongodb:
+  #   image: mongo:latest
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=admin
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - ./data/mongoDB:/data/db
+  #   networks:
+  #     - masterproject-ddd
+
+  # mongodbUI:
+  #   image: samueltallet/mongodb-php-gui
+  #   hostname: mongodbUI
+  #   ports:
+  #     - "5000:5000"
+  #   networks:
+  #     - masterproject-ddd
+
+networks:
+  masterproject-ddd:
+    driver: bridge
