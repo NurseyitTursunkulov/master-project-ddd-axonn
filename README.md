@@ -1,30 +1,30 @@
-# This Project Demostrate a DDD application with Event Sourcing
+# Dieses Projekt demonstriert eine DDD-Anwendung mit Event Sourcing
 
-The implemented app consist of multiple microservices working together to archive a common goal
+Die implementierte Anwendung besteht aus mehreren Microservices, die zusammenarbeiten, um ein gemeinsames Ziel zu erreichen
 
-## App Description
+## App Beschreibung
 
 ### Article Service
 
-This service offers fucntions for a verify user to create and publish an article.
+Dieser service bietet einem verifizierten Benutzer die Möglichkeit, einen Artikel zu erstellen und zu veröffentlichen.
 
 ### User Profile Service
 
-This service offers fucntions for user profile creation. which can then be used to create and publish an article
+Dieser service bietet die Möglichkeit, ein Benutzerprofil zu erstellen, das dann zum Erstellen und Veröffentlichen eines Artikels verwendet werden kann.
 
 ### Comment Service
 
-This service fucntions for a verify user to leave a comment under a published article.
+Dieser service ermöglicht es einem verifizierten Benutzer, einen Kommentar unter einem veröffentlichten Artikel zu hinterlassen.
 
 ### Article Management Service
 
-This service is responsible for coordinathing communications between all the services.
+Dieser service ist für die Koordinierung der Kommunikation zwischen allen services zuständig.
 
-Offers Sagas for coordinating user profile creation as well as article creation and comment creation.
+Er bietet Sagas zur Koordinierung der Erstellung von Benutzerprofilen sowie der Erstellung von Artikeln und Kommentaren.
 
 ### Starting application with Docker
 
-Make sure you have both maven and docker installed, then run the following commands
+Vergewissern Sie sich, dass Sie sowohl maven als auch Docker installiert haben, und führen Sie dann die folgenden Befehle aus
 
 ```bash
     mvn clean package
