@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "commons.proto";
+
+package masterproject.ddd.grpc;
+
+option java_package = "com.masterproject.ddd.grpc.api.userprofile";
+option java_multiple_files = true;
+
+message CreateUserProfileRequest {
+    string userName = 1;
+    string name = 2;
+    string email = 3;
+}
+
+enum UPStatus {
+    UP_NEW = 0;
+    UP_VERIFIED = 1;
+    UP_REJECTED = 2;
+    UP_ACTIVATED = 3;
+    UP_DEACTIVATED = 4;
+}
+
+message GetUserProfileResponse{
+    string id = 1;
+    string name = 2;
+    string username = 3;
+    string email = 4;
+    UPStatus status = 5;
+    google.protobuf.Timestamp registeredOn = 6;
+}
+
+message GetAllUserProfilesResponse{
+    repeated GetUserProfileResponse userProfiles = 1;
+
+}
+
+message GetUserProfilesByStatusRequest{
+    UPStatus status = 1;
+}
+
+
+service User {
+    rpc createUserProfile(CreateUserProfileRequest) returns (StringMessageParam) {}
+    rpc verifyProfile(StringMessageParam) returns (StringMessageParam) {}
+    rpc getUserProfileById(StringMessageParam) returns (GetUserProfileResponse) {}
+    rpc getUserProfiles(EmptyMessageParam) returns (GetAllUserProfilesResponse) {}
+    rpc getUserProfilesByStatus(GetUserProfilesByStatusRequest) returns (GetAllUserProfilesResponse) {}
+}

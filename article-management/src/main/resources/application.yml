@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: article-management-service
+
+server:
+  port: ${SERVER_PORT:9090}
+
+axon:
+  axonserver:
+    servers: ${AXON_SERVER:localhost}
+
+springdoc:
+  swagger-ui:
+    path: /doc
+    urls:
+      - name: article
+        url: ${ARTICLE_SERVER:http://localhost:9091}/v3/api-docs
+      - name: user-profile
+        url: ${USER_SERVER:http://localhost:9093}/v3/api-docs
+      - name: comment
+        url: ${COMMENT_SERVER:http://localhost:9092}/v3/api-docs

@@ -1,0 +1,17 @@
+{
+  "id": "7ac4e66b-6dff-4023-8155-22ad016f53ab",
+  "importStreams": [
+    {
+      "id": "d704f660-55d7-40de-b4d8-8345f2541922",
+      "name": "grpc-server-reflection",
+      "importerName": "GrpcServerReflection",
+      "createMissingOperations": true,
+      "options": {
+        "endpoint": "http://localhost:7073",
+        "disableServerCertificateValidation": true
+      }
+    }
+  ],
+  "authConfigs": [],
+  "certificates": []
+}

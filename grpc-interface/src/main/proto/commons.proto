@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package masterproject.ddd.grpc;
+
+option java_package = "com.masterproject.ddd.grpc.api.commons";
+option java_multiple_files = true;
+
+
+
+message StringMessageParam{
+    string value = 1;
+}
+
+message EmptyMessageParam {}

@@ -1,0 +1,13 @@
+{
+  "details": {
+    "methodFqn": "grpc.health.v1.Health.Watch"
+  },
+  "requests": [
+    {
+      "location": "Watch-request.json"
+    }
+  ],
+  "operationType": "serverStreaming",
+  "invokerName": "grpc",
+  "importStreamId": "d704f660-55d7-40de-b4d8-8345f2541922"
+}

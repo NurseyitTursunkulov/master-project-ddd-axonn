@@ -1,0 +1,8 @@
+{
+  "authorID": "{{ faker.random.uuid }}",
+  "articleDetails": {
+    "title": "24 hour Algerian Dinar",
+    "description": "open-source payment dynamic",
+    "body": "Philippines benchmark"
+  }
+}

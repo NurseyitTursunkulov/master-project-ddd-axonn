@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package masterproject.ddd.grpc;
+
+
+import "google/protobuf/timestamp.proto";
+import "commons.proto";
+
+
+option java_package = "com.masterproject.ddd.grpc.api.article";
+option java_multiple_files = true;
+
+
+message CreateArticleDetails {
+    string title = 1;
+    string description = 2;
+    string body = 3;
+}
+
+message CreateArticleRequest{
+    string authorID = 1;
+    CreateArticleDetails articleDetails = 2;
+}
+
+message UpdateArticleRequest{
+    string articleID = 1;
+    CreateArticleDetails articleDetails = 2;
+}
+
+enum ArtStatus {
+    Art_CREATED = 0; 
+    Art_REJECTED = 1;
+    Art_PUBLISHED = 2;
+    Art_CLOSED = 3;
+}
+
+message ArticleResponse {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string body = 4;
+    string authorID = 5;
+    ArtStatus status = 6;
+    google.protobuf.Timestamp createdOn = 7;
+    google.protobuf.Timestamp updatedOn = 8;
+}
+
+
+message GetAllArticlesResponse{
+    repeated ArticleResponse articles = 1;
+}
+
+message GetArticlesByStatusRequest{
+    ArtStatus status = 1;
+}
+
+
+service Article {
+    rpc createArticle(CreateArticleRequest) returns (StringMessageParam) {}
+    rpc updateArticle(UpdateArticleRequest) returns (StringMessageParam) {}
+    rpc closeArticle(StringMessageParam) returns (StringMessageParam) {}
+    rpc getArticleById(StringMessageParam) returns (ArticleResponse) {}
+    rpc getAllArticleByStatus(GetArticlesByStatusRequest) returns (GetAllArticlesResponse) {}
+}

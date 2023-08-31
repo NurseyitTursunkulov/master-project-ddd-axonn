@@ -1,0 +1,13 @@
+{
+  "details": {
+    "methodFqn": "masterproject.ddd.grpc.User.createUserProfile"
+  },
+  "requests": [
+    {
+      "location": "createUserProfile-request.json"
+    }
+  ],
+  "operationType": "unary",
+  "invokerName": "grpc",
+  "importStreamId": "d704f660-55d7-40de-b4d8-8345f2541922"
+}

@@ -1,0 +1,120 @@
+version: "3.7"
+name: masterproject-ddd-stack
+
+services:
+  axonserver:
+    image: axoniq/axonserver:latest-dev
+    hostname: axonserver
+    volumes:
+      - ./data/axon-server-se/data:/axonserver/data
+      - ./data/axon-server-se/events:/axonserver/events
+      - ./data/axon-server-se/config:/axonserver/config:ro
+    ports:
+      - "8024:8024"
+      - "8124:8124"
+    networks:
+      - masterproject-ddd
+
+  article-management:
+    image: article/management:latest
+    container_name: article_management
+    build:
+      context: ./article-management
+      dockerfile: DockerFile
+    environment:
+      - SERVER_PORT=9090
+      - ARTICLE_SERVER=http://article:9091
+      - COMMENT_SERVER=http://comment:9092
+      - USER_SERVER=http://user:9093
+      - AXON_SERVER=axonserver
+    ports:
+      - "9090:9090"
+    depends_on:
+      - axonserver
+    volumes:
+      - ./data:/app/data
+    networks:
+      - masterproject-ddd
+    command: >
+      ./wait-for-it.sh axonserver:8124 --
+      java -jar app.jar
+
+  user:
+    image: user/service:latest
+    container_name: user-service
+    build:
+      context: ./user-service
+      dockerfile: DockerFile
+    environment:
+      - SERVER_PORT=9093
+      - GRPC_PORT=7073
+      - AXON_SERVER=axonserver
+    ports:
+      - "9093:9093"
+      - "7073:7073"
+    depends_on:
+      - axonserver
+      - article-management
+    volumes:
+      - ./data:/app/data
+    networks:
+      - masterproject-ddd
+    command: >
+      ./wait-for-it.sh axonserver:8124 --
+      ./wait-for-it.sh article-management:9090 --
+      java -jar app.jar
+
+  article:
+    image: article/service:latest
+    container_name: article-service
+    build:
+      context: ./article-service
+      dockerfile: DockerFile
+    environment:
+      - SERVER_PORT=9091
+      - GRPC_PORT=7071
+      - AXON_SERVER=axonserver
+    ports:
+      - "9091:9091"
+      - "7071:7071"
+    depends_on:
+      - axonserver
+      - article-management
+    volumes:
+      - ./data:/app/data
+    networks:
+      - masterproject-ddd
+    command: >
+      ./wait-for-it.sh axonserver:8124 --
+      ./wait-for-it.sh article_management:9090 --
+      java -jar app.jar
+
+  comment:
+    image: comment/service:latest
+    container_name: comment-service
+    build:
+      context: ./comment-service
+      dockerfile: DockerFile
+    environment:
+      - SERVER_PORT=9092
+      - GRPC_PORT=7072
+      - AXON_SERVER=axonserver
+    ports:
+      - "9092:9092"
+      - "7072:7072"
+    depends_on:
+      - axonserver
+      - article-management
+    volumes:
+      - ./data:/app/data
+    networks:
+      - masterproject-ddd
+    command: >
+      ./wait-for-it.sh axonserver:8124 --
+      ./wait-for-it.sh article_management:9090 --
+      java -jar app.jar
+
+networks:
+  masterproject-ddd:
+    driver: bridge
+

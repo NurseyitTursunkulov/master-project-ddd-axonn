@@ -1,0 +1,8 @@
+{
+  "articleID": "{{ faker.random.uuid }}",
+  "articleDetails": {
+    "title": "AI Cambridgeshire connecting",
+    "description": "magnetic",
+    "body": "Fresh Awesome"
+  }
+}

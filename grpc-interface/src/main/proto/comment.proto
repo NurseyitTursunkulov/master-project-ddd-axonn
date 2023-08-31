@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package masterproject.ddd.grpc;
+
+
+import "google/protobuf/timestamp.proto";
+import "commons.proto";
+
+
+option java_package = "com.masterproject.ddd.grpc.api.comment";
+option java_multiple_files = true;
+
+
+message CreateCommentRequest{
+    string message = 1;
+    string articleId = 2;
+    string authorID = 3;
+}
+
+enum CMStatus{
+    CM_CREATED = 0;
+    CM_PUBLISHED = 1;
+    CM_REJECTED = 2;
+    CM_REMOVED = 3;
+}
+
+message CommentResponse{
+    string id = 1;
+    string articleID = 2;
+    string authorID = 3;
+    string message = 4;
+    CMStatus status = 5;
+    google.protobuf.Timestamp createdOn = 6;
+    google.protobuf.Timestamp updatedOn = 7;
+}
+
+message MultipleCommentResonse{
+    repeated CommentResponse comments = 1;
+}
+
+
+service Comment {
+    rpc createComment(CreateCommentRequest) returns (StringMessageParam) {}
+    rpc getCommentsById(StringMessageParam) returns (CommentResponse) {}
+    rpc getCommentsByArticle(StringMessageParam) returns (MultipleCommentResonse) {}
+    rpc getCommentsByAuthor(StringMessageParam) returns (MultipleCommentResonse) {}
+}

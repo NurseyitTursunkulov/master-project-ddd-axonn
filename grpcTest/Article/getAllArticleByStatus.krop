@@ -1,0 +1,13 @@
+{
+  "details": {
+    "methodFqn": "masterproject.ddd.grpc.Article.getAllArticleByStatus"
+  },
+  "requests": [
+    {
+      "location": "getAllArticleByStatus-request.json"
+    }
+  ],
+  "operationType": "unary",
+  "invokerName": "grpc",
+  "importStreamId": "784c0eb5-de43-40c0-a01c-b2191bd2a69f"
+}
